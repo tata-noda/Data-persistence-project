@@ -18,6 +18,8 @@ public class MainManager : MonoBehaviour
     
     private bool m_GameOver = false;
 
+    [SerializeField] private MainUIHandler m_UIHandler;
+
     
     // Start is called before the first frame update
     void Start()
@@ -70,6 +72,11 @@ public class MainManager : MonoBehaviour
 
     public void GameOver()
     {
+        if (m_Points > DataManager.Instance.highScore.playerScore)
+        {
+            DataManager.Instance.SaveHighScore(m_Points);
+            m_UIHandler.UpdateBestScoreText();
+        }
         m_GameOver = true;
         GameOverText.SetActive(true);
     }
